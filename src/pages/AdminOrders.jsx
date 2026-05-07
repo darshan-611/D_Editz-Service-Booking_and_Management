@@ -10,12 +10,7 @@ export default function AdminOrders() {
     fetch(`${API_URL}/api/bookings`)
       .then((res) => res.json())
       .then((data) => {
-        const updatedOrders = data.map((order) => ({
-          ...order,
-          status: order.status || "Pending",
-        }));
-
-        setOrders(updatedOrders);
+        setOrders(data);
         setLoading(false);
       })
       .catch((err) => {
@@ -23,22 +18,6 @@ export default function AdminOrders() {
         setLoading(false);
       });
   }, []);
-
-  const handleDelete = (indexToDelete) => {
-    const updatedOrders = orders.filter(
-      (_, index) => index !== indexToDelete
-    );
-
-    setOrders(updatedOrders);
-  };
-
-  const handleStatusChange = (index, value) => {
-    const updatedOrders = [...orders];
-
-    updatedOrders[index].status = value;
-
-    setOrders(updatedOrders);
-  };
 
   return (
     <div
@@ -85,8 +64,6 @@ export default function AdminOrders() {
                 <th style={thStyle}>Service</th>
                 <th style={thStyle}>Phone</th>
                 <th style={thStyle}>Message</th>
-                <th style={thStyle}>Status</th>
-                <th style={thStyle}>Actions</th>
               </tr>
             </thead>
 
@@ -94,67 +71,9 @@ export default function AdminOrders() {
               {orders.map((order, index) => (
                 <tr key={index}>
                   <td style={tdStyle}>{order.name}</td>
-
-                  <td style={tdStyle}>
-                    {order.service}
-                  </td>
-
-                  <td style={tdStyle}>
-                    {order.phone}
-                  </td>
-
-                  <td style={tdStyle}>
-                    {order.message}
-                  </td>
-
-                  <td style={tdStyle}>
-                    <select
-                      value={order.status}
-                      onChange={(e) =>
-                        handleStatusChange(
-                          index,
-                          e.target.value
-                        )
-                      }
-                      style={{
-                        padding: "8px",
-                        borderRadius: "6px",
-                        background: "#111827",
-                        color: "white",
-                        border: "1px solid #333",
-                      }}
-                    >
-                      <option value="Pending">
-                        Pending
-                      </option>
-
-                      <option value="Ongoing">
-                        Ongoing
-                      </option>
-
-                      <option value="Completed">
-                        Completed
-                      </option>
-                    </select>
-                  </td>
-
-                  <td style={tdStyle}>
-                    <button
-                      onClick={() =>
-                        handleDelete(index)
-                      }
-                      style={{
-                        padding: "8px 14px",
-                        border: "none",
-                        borderRadius: "6px",
-                        background: "red",
-                        color: "white",
-                        cursor: "pointer",
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </td>
+                  <td style={tdStyle}>{order.service}</td>
+                  <td style={tdStyle}>{order.phone}</td>
+                  <td style={tdStyle}>{order.message}</td>
                 </tr>
               ))}
             </tbody>
