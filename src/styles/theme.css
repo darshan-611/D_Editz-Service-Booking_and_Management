@@ -1,197 +1,122 @@
-:root {
-  --bg-primary: #0b0b0f;
-  --bg-secondary: #14141b;
-  --text-primary: #ffffff;
-  --text-secondary: #b3b3be;
-  --accent: #a970ff;
-  --accent-soft: rgba(169, 112, 255, 0.16);
-  --border: rgba(255, 255, 255, 0.12);
-  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+/* =========================
+   ADMIN ORDERS
+========================= */
+
+.admin-orders-page {
+  padding: 40px 0;
 }
 
-body {
-  background: radial-gradient(circle at top right, #1a1130 0%, #0b0b0f 42%, #09090d 100%);
-  color: var(--text-primary);
-}
-
-a {
-  text-decoration: none;
-}
-
-#root {
-  min-height: 100vh;
-}
-
-.app-shell {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.main-content {
-  flex: 1;
-}
-
-.custom-navbar {
-  background: rgba(10, 10, 14, 0.8);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
-}
-
-.brand-text {
-  letter-spacing: 2px;
-}
-
-.brand-logo-wrap {
-  width: 40px;
-  height: 40px;
-  border-radius: 50px;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.03);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
-  flex: 0 0 auto;
-}
-
-.brand-logo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.footer-logo {
-  width: 34px;
-  height: 34px;
-}
-
-.nav-pill {
-  border-radius: 999px;
-  padding: 0.4rem 0.9rem !important;
-  transition: all 0.25s ease;
-}
-
-.nav-pill:hover,
-.nav-pill.active {
-  background: var(--accent-soft);
-  color: var(--text-primary) !important;
-}
-
-.hero-section {
-  padding: 4.5rem 0 3rem;
-}
-
-.hero-title {
-  font-size: clamp(2rem, 6vw, 4rem);
-  line-height: 1.1;
-}
-
-.hero-subtitle {
-  color: var(--text-secondary);
-  max-width: 700px;
-}
-
-.section-spacing {
-  padding: 3.5rem 0;
-}
-
-.section-title {
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
-  margin-bottom: 1rem;
-}
-
-.text-accent {
-  color: var(--accent);
-}
-
-.service-card,
-.portfolio-card,
-.glass-card {
-  background: linear-gradient(140deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
-  border: 1px solid var(--border);
+.orders-table-wrapper {
+  overflow-x: auto;
   border-radius: 18px;
-  box-shadow: var(--shadow);
 }
 
-.service-card,
-.portfolio-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
 }
 
-.service-card:hover,
-.portfolio-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.45);
-}
-
-.service-card img,
-.portfolio-card img {
-  border-top-left-radius: 18px;
-  border-top-right-radius: 18px;
-  height: 220px;
-  object-fit: cover;
-}
-
-.price-tag {
-  font-weight: 600;
-  color: var(--accent);
-}
-
-.btn-brand {
-  background: var(--accent);
-  border: none;
-  color: #fff;
-  border-radius: 10px;
-  padding: 0.6rem 1.1rem;
-  transition: all 0.25s ease;
-}
-
-.btn-brand:hover {
-  background: #9255f8;
-  transform: translateY(-2px);
-}
-
-.btn-hover {
-  border-radius: 10px;
-  transition: all 0.25s ease;
-}
-
-.btn-hover:hover {
-  transform: translateY(-2px);
-}
-
-.custom-input {
+.orders-table thead {
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border);
+}
+
+.orders-table th {
+  padding: 18px;
+  text-align: left;
   color: var(--text-primary);
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
 }
 
-.custom-input:focus {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: var(--accent);
-  box-shadow: 0 0 0 0.2rem rgba(169, 112, 255, 0.25);
-  color: var(--text-primary);
+.orders-table td {
+  padding: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+  transition: background 0.25s ease;
 }
 
-.site-footer {
-  border-top: 1px solid var(--border);
-  background: rgba(10, 10, 14, 0.7);
-}
-
-.social-chip {
-  padding: 0.35rem 0.8rem;
-  border-radius: 999px;
-  border: 1px solid var(--border);
+.orders-table tbody tr:hover {
   background: rgba(255, 255, 255, 0.03);
-  font-size: 0.85rem;
 }
+
+/* =========================
+   STATUS SELECT
+========================= */
+
+.orders-table select {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  border-radius: 10px;
+  padding: 0.55rem 0.8rem;
+  outline: none;
+  transition: 0.25s ease;
+}
+
+.orders-table select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 0.2rem rgba(169, 112, 255, 0.2);
+}
+
+.orders-table option {
+  background: #121218;
+  color: white;
+}
+
+/* =========================
+   DELETE BUTTON
+========================= */
+
+.delete-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 0.55rem 1rem;
+  transition: all 0.25s ease;
+  font-weight: 500;
+}
+
+.delete-btn:hover {
+  background: #bb2d3b;
+  transform: translateY(-2px);
+}
+
+/* =========================
+   BOOKING PAGE
+========================= */
+
+.booking-page {
+  max-width: 900px;
+  margin: auto;
+}
+
+.booking-page .glass-card {
+  padding: 2rem;
+}
+
+/* =========================
+   TABLE RESPONSIVE
+========================= */
 
 @media (max-width: 768px) {
-  .hero-section {
-    padding-top: 3rem;
+  .orders-table th,
+  .orders-table td {
+    padding: 12px;
+    font-size: 14px;
   }
 
-  .section-spacing {
-    padding: 2.4rem 0;
+  .orders-table select {
+    width: 100%;
+  }
+
+  .delete-btn {
+    width: 100%;
+    margin-top: 6px;
+  }
+
+  .booking-page .glass-card {
+    padding: 1.2rem;
   }
 }
