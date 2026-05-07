@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
 import os
 
 app = Flask(__name__)
@@ -13,22 +14,62 @@ CORS(
     supports_credentials=True
 )
 
-bookings = []
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
-@app.get("/api/bookings")
-def get_bookings():
-    return jsonify(bookings)
+app.config["SQLALCHEMY_DATABASE_URI"] = \
+    "sqlite:///" + os.path.join(BASE_DIR, "bookings.db")
 
-@app.post("/api/bookings")
-def add_booking():
-    data = request.get_json()
-    bookings.append(data)
-    return jsonify({
-        "message": "Booking stored",
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+db = SQLAlchemy(app)
+
+class Booking(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    service = db.Column(db.String(100))
+    phone = db.Column(db.String(20))
+    message = db.Column(db.String(500))
+
+with app.app_context():
+    db.create_all()
+
 @app.get("/")
 def home():
     return jsonify({"message": "Backend running successfully"})
 
+@app.get("/api/bookings")
+def get_bookings():
+    bookings = Booking.query.all()
+
+    return jsonify([
+        {
+            "id": booking.id,
+            "name": booking.name,
+            "service": booking.service,
+            "phone": booking.phone,
+            "message": booking.message
+        }
+        for booking in bookings
+    ])
+
+@app.post("/api/bookings")
+def add_booking():
+    data = request.get_json()
+
+    booking = Booking(
+        name=data.get("name"),
+        service=data.get("service"),
+        phone=data.get("phone"),
+        message=data.get("message")
+    )
+
+    db.session.add(booking)
+    db.session.commit()
+
+    return jsonify({
+        "message": "Booking stored successfully"
+    }), 201
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port, debug=True)
+    app.run(host="0.0.0.0", port=port)
